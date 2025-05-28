@@ -1,19 +1,63 @@
-import { View, Platform, StyleSheet} from 'react-native';
+import React,{useState} from 'react';
+import { View, Platform, StyleSheet, TouchableOpacity, Touchable, LayoutChangeEvent} from 'react-native';
 import { useLinkBuilder, useTheme } from '@react-navigation/native';
 import { Text, PlatformPressable } from '@react-navigation/elements';
 import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
+import { icon } from '@/constants/icon';
+import  TabBarButton  from '@/components/TabBarButton/TabBarButton.component';
+import Animated,{ useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { colors } = useTheme();
   const { buildHref } = useLinkBuilder();
-  const icons = {
-    index : (props: any) => (<Feather name='home' size={24} {...props}/>),
-    profile : (props: any) => (<Feather name='user' size={24} {...props} />),
-    notifications : (props: any) => (<Feather name='bell' size={24} {...props}/>),
-  }
+  const [dimensions, setDimensions] = useState({
+    width: 20,
+    height: 100,
+  });
+
+  const buttonWidth = dimensions.width / state.routes.length;
+  const buttonHeight = dimensions.height; // Adjust height as needed
+
+  const onTabBarLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setDimensions({ width, height });
+  };
+
+  const tabPositionX = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: tabPositionX.value,
+        },
+      ],
+    };
+  });
+
   return (
-    <View style={styles.tabBar}>
+    <View onLayout={onTabBarLayout} style={styles.tabBar}>
+      <Animated.View
+        style={[
+          {
+            position: 'absolute',
+            width: buttonWidth - 34, // Adjust width to fit the button
+            height: buttonHeight,
+            backgroundColor: 'brown',
+            borderRadius: 40,
+            left: 17, // Adjust left position to center the indicator
+            shadowOffset: {
+              width: 0,
+              height: 10,
+            },
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+            shadowRadius: 3.5,
+            elevation: 5,
+          },
+          animatedStyle,
+        ]}
+      />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -26,6 +70,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         const isFocused = state.index === index;
 
         const onPress = () => {
+          tabPositionX.value = withSpring(index * buttonWidth, {duration: 2000});
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -45,21 +90,15 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         };
 
         return (
-          <PlatformPressable
+          <TabBarButton
             key={route.name}
-            href={buildHref(route.name, route.params)}
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarButtonTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={styles.tabItem}
-          >
-            {icons[route.name]({ color: isFocused ? "brown" : colors.text })}
-            <Text style={{ color: isFocused ? "brown" : colors.text }}>
-                {(label as string).charAt(0).toUpperCase() + (label as string).slice(1)}
-            </Text>
-          </PlatformPressable>
+            isFocused={isFocused}
+            routeName={route.name}
+            label={label}
+            colors={isFocused ? 'brown' : '#222'}
+          />
         );
       })}
     </View>
@@ -84,11 +123,4 @@ const styles = StyleSheet.create({
    shadowRadius: 3.5,
    elevation: 5,
   },
-  tabItem: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 5,
-    padding: 10,
-  }
 });
