@@ -41,7 +41,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         style={[
           {
             position: 'absolute',
-            width: buttonWidth - 34, // Adjust width to fit the button
+            width: buttonWidth - 35, // Adjust width to fit the button
             height: buttonHeight,
             backgroundColor: 'brown',
             borderRadius: 40,
@@ -107,7 +107,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 const styles = StyleSheet.create({
   tabBar: {
    position: 'absolute',
-   bottom: 50,
+   bottom: 20,
    flexDirection: 'row',
    backgroundColor: 'ghostwhite',
    justifyContent: 'space-between',
