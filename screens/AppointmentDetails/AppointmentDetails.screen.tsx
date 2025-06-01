@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import NavBar from '@/components/NavBar/NavBar.component';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -26,7 +27,7 @@ type RootStackParamList = {
     AppointmentDetails: AppointmentDetailsProps;
 };
 
-export default function AppointmentDetails() {
+export default function AppointmentDetails({navigation}: {navigation: any}) {
     const route = useRoute<RouteProp<RootStackParamList, 'AppointmentDetails'>>();
     const {
         date,
@@ -42,11 +43,19 @@ export default function AppointmentDetails() {
         serviceUserContact,
         nextOfKin,
         careList,
-        address,
+        address = '', // Provide a default value if address is missing
     } = route.params;
 
     return (
-        <ScrollView contentContainerStyle={styles.detailsContainer}>
+        <View>
+            <NavBar 
+                title="Appointment Details"
+                leftIcon="arrow-back"
+                onLeftPress={() => navigation.goBack()}
+                style={{ backgroundColor: '#fff', elevation: 5, shadowOpacity: 0 }}
+                rightIcon="Home"
+                onRightPress={() => navigation.navigate('Home')}
+            />
             <View style={styles.header}>
                 <Image source={{ uri: caregiverPic }} style={styles.caregiverPic} />
                 <View style={styles.headerText}>
@@ -54,6 +63,7 @@ export default function AppointmentDetails() {
                     <Text style={styles.date}>{date}</Text>
                 </View>
             </View>
+        <ScrollView contentContainerStyle={styles.detailsContainer}>
             <Text style={styles.label}>Time:</Text>
             <Text style={styles.value}>{startTime} - {endTime}</Text>
             <Text style={styles.label}>Attended:</Text>
@@ -74,9 +84,10 @@ export default function AppointmentDetails() {
             {careList.map((item, idx) => (
                 <Text key={idx} style={styles.value}>• {item}</Text>
             ))}
-            <Text style={styles.label}>Address:</Text>
-            <Text style={styles.value}>{address}</Text>
+            <Text style={[styles.label,{paddingBottom: 150}]}>Address:</Text>
+            <Text style={[styles.value,{color:"red"}]}>{address}</Text>
         </ScrollView>
+        </View>
     );
 };
 
@@ -84,7 +95,6 @@ const styles = StyleSheet.create({
     detailsContainer: {
         padding: 20,
         backgroundColor: '#fff',
-        marginBottom: 50,
     },
     header: {
         flexDirection: 'row',
@@ -120,5 +130,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
         marginTop: 2,
+    },
+    address: {
+        fontSize: 16,
+        color: '#333',
+        marginTop: 2,
+        marginBottom: 16,
     },
 });

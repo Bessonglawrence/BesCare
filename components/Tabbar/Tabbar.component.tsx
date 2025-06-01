@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
    alignItems: 'center',
    //marginHorizontal: 45,
    //borderRadius: 40,
+   height: 65,
    shadowOffset: {
      width: 0,
      height: 10,

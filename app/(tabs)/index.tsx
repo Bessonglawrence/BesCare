@@ -8,7 +8,6 @@ import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 import NotificationsScreen from './notifications';
 
-
 const Stack = createStackNavigator();
 
 const indexPage = () => {

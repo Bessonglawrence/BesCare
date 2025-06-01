@@ -51,7 +51,7 @@ const NavBar: React.FC<NavBarProps> = ({
 
 const styles = StyleSheet.create({
     container: {
-        height: 56,
+        height: 65,
         backgroundColor: 'brown', // Semi-transparent brown
         flexDirection: 'row',
         alignItems: 'center',
