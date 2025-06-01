@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import { appointments } from '@/components/Data/Data';
 import AppointmentCard from '@/components/AppointmentCard/AppointmentCard.component';
+import NavBar from '@/components/NavBar/NavBar.component';
 
 
 // Function to check if an appointment is in the future
@@ -55,6 +56,13 @@ export default function HomePage({navigation}: {navigation: any}) {
 
     return (
         <View style={styles.container}>
+             <NavBar 
+                title='Home'
+                style={{ elevation: 0, backgroundColor: '#fff' }} // Custom styles for NavBar
+                rightIcon
+                iconName='notifications-outline' // Icon for notifications
+                onRightPress={() => navigation.navigate('Notifications')} // Navigate to Notifications screen
+            />
             <DateBar
             dates={dates}
             selectedDate={selectedDate}
@@ -66,14 +74,13 @@ export default function HomePage({navigation}: {navigation: any}) {
             contentContainerStyle={{ padding: 16 }}
             renderItem={({ item }) => (
                 <AppointmentCard
-                userName={item.userName}
-                startTime={item.startTime}
-                endTime={item.endTime}
-                caregiverPic={item.caregiverPic}
-                attended={item.attended}
-                date={item.date}
-                onPress={() => navigation.navigate('AppointmentDetails', { ...item })} // Passes appointment data
-                //onPress={() => console.log('Appointment pressed:', item)} // Placeholder for navigation
+                    userName={item.userName}
+                    startTime={item.startTime}
+                    endTime={item.endTime}
+                    caregiverPic={item.caregiverPic}
+                    attended={item.attended}
+                    date={item.date}
+                    onPress={() => navigation.navigate('AppointmentDetails', { ...item })} // Passes appointment data
                 />
             )}
             ListEmptyComponent={

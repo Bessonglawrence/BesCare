@@ -41,11 +41,11 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         style={[
           {
             position: 'absolute',
-            width: buttonWidth - 35, // Adjust width to fit the button
+            width: buttonWidth - 65, // Adjust width to fit the button
             height: buttonHeight,
             backgroundColor: 'brown',
             borderRadius: 40,
-            left: 17, // Adjust left position to center the indicator
+            left: 32.5, // Adjust left position to center the indicator
             shadowOffset: {
               width: 0,
               height: 10,
@@ -106,14 +106,14 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 }
 const styles = StyleSheet.create({
   tabBar: {
-   position: 'absolute',
-   bottom: 20,
+   position: 'relative',
+   //bottom: 5,
    flexDirection: 'row',
    backgroundColor: 'ghostwhite',
    justifyContent: 'space-between',
    alignItems: 'center',
-   marginHorizontal: 45,
-   borderRadius: 40,
+   //marginHorizontal: 45,
+   //borderRadius: 40,
    shadowOffset: {
      width: 0,
      height: 10,
