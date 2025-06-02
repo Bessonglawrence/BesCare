@@ -1,8 +1,9 @@
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput, } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import NavBar from '@/components/NavBar/NavBar.component';
 import { Animated, Dimensions } from 'react-native';
 import React, { useRef, useEffect,useState  } from 'react';
+import { Checkbox } from 'react-native-paper';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -58,6 +59,11 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [notesInput, setNotesInput] = useState('');
+    const [alertSupervisor, setAlertSupervisor] = useState(false);
+    function setAnotherCheckbox(arg0: (prev: any) => boolean): void {
+        throw new Error('Function not implemented.');
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <NavBar 
@@ -124,7 +130,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <Text style={styles.value}>{carerName}</Text>
                         <Text style={styles.label}>Care List:</Text>
                         {careList.map((item, idx) => (
-                            <Text key={idx} style={styles.value}>• {item}</Text>
+                            <Text key={idx} style={[styles.value, { marginBottom: 10 }]}>• {item}</Text>
                         ))}
                     </>
                 )}
@@ -173,6 +179,15 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
                             <View style={{ width: '85%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
                                 <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>Add Notes</Text>
+                                <Text style={{ marginBottom: 10 }}>Please add any notes related to this appointment:</Text>
+                                <Checkbox
+                                    status={alertSupervisor ? 'checked' : 'unchecked'}
+                                    onPress={() => setAlertSupervisor(prev => !prev)}
+                                    color={alertSupervisor ? '#1976d2' : undefined}
+                                    //disabled={false}
+                                />
+                                <Text style={{ marginBottom: 10 }}>Alert Supervisor</Text>
+
                                 <TextInput
                                     style={{
                                         borderWidth: 1,
