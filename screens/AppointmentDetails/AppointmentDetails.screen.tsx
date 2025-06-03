@@ -3,8 +3,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import NavBar from '@/components/NavBar/NavBar.component';
 import { Animated, Dimensions } from 'react-native';
 import React, { useRef, useEffect,useState  } from 'react';
-import { Checkbox } from 'react-native-paper';
-
+import Checkbox from 'expo-checkbox';
 type AppointmentDetailsProps = {
     date: string;
     userName: string;
@@ -129,9 +128,11 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <Text style={styles.label}>Carer Name:</Text>
                         <Text style={styles.value}>{carerName}</Text>
                         <Text style={styles.label}>Care List:</Text>
-                        {careList.map((item, idx) => (
-                            <Text key={idx} style={[styles.value, { marginBottom: 10 }]}>• {item}</Text>
-                        ))}
+                        <View style={{ flexWrap: 'wrap', marginBottom: 30 }}>
+                            {careList.map((item, idx) => (
+                                <Text key={idx} style={[styles.value,]}>• {item}</Text>
+                            ))}
+                        </View>
                     </>
                 )}
             </ScrollView>
@@ -177,16 +178,26 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         onRequestClose={() => setModalVisible(false)}
                     >
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
-                            <View style={{ width: '85%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 18, marginBottom: 10 }}>Add Notes</Text>
-                                <Text style={{ marginBottom: 10 }}>Please add any notes related to this appointment:</Text>
-                                <Checkbox
-                                    status={alertSupervisor ? 'checked' : 'unchecked'}
-                                    onPress={() => setAlertSupervisor(prev => !prev)}
-                                    color={alertSupervisor ? '#1976d2' : undefined}
-                                    //disabled={false}
-                                />
-                                <Text style={{ marginBottom: 10 }}>Alert Supervisor</Text>
+                            <TouchableOpacity
+                                style={{ position: 'absolute', top: 60, alignSelf: 'center', zIndex: 1, padding: 10, backgroundColor: 'brown', borderRadius: 50, paddingHorizontal: 15, paddingVertical: 5 }}
+                                activeOpacity={0.7}
+                                onPress={() => setModalVisible(false)}
+                            >
+                                <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>X</Text>
+                            </TouchableOpacity>
+                
+                            {/* Modal content */}
+                            <View style={{ width: '90%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10, alignSelf: 'center' }}>Add Notes</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
+                                    <Checkbox
+                                        value={alertSupervisor}
+                                        onValueChange={setAlertSupervisor}
+                                        color={alertSupervisor ? '#1976d2' : undefined}
+                                        disabled={false}
+                                    />
+                                    <Text style={{ marginLeft: 8, fontSize: 16 }}>Alert Supervisor</Text>
+                                </View>
 
                                 <TextInput
                                     style={{
