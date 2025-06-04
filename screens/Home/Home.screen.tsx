@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ScrollView, Alert } from 'react-native';
 import { appointments } from '@/components/Data/Data';
 import AppointmentCard from '@/components/AppointmentCard/AppointmentCard.component';
 import NavBar from '@/components/NavBar/NavBar.component';
+import { useEffect } from 'react';
+import { BackHandler } from 'react-native';
 
 
 // Function to check if an appointment is in the future
@@ -11,6 +13,7 @@ export const isFutureAppointment = (date: string, startTime: string) => {
     const appointmentDate = new Date(`${date}T${startTime}:00`);
     return appointmentDate > new Date();
 };
+
 
 // Helper to get unique dates from appointments
 const getDates = () => {
@@ -53,6 +56,38 @@ export default function HomePage({navigation}: {navigation: any}) {
     const [selectedDate, setSelectedDate] = useState(dates[0]);
 
     const filteredAppointments = appointments.filter(a => a.date === selectedDate);
+
+
+    // Hook to exit app on hardware back button press
+    // const useExitOnBack = () => {
+    //     useEffect(() => {
+    //         const onBackPress = () => {
+    //             BackHandler.exitApp();
+    //             return true;
+    //         };
+    //         BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    //         return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    //     }, []);
+    // };
+
+    useEffect(() => {
+        const onBackPress = () => {
+            // Show confirmation alert before exiting
+            // Use React Native's Alert API
+            Alert.alert(
+                'Exit App',
+                'Are you sure you want to exit?',
+                [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'Exit', style: 'destructive', onPress: () => BackHandler.exitApp() },
+                ],
+                { cancelable: true }
+            );
+            return true;
+        };
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+        return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, []);
 
     return (
         <View style={styles.container}>

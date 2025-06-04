@@ -19,12 +19,12 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* <Image
-                source={require('../../assets/logo.png')} // Replace with your logo path
-                style={{ width: 100, height: 100, marginBottom: 20 }}
-            /> */}
+            <Image
+                source={require('../../assets/images/BesCare.png')} // Replace with your logo path
+                style={{ width: 150, height: 150, borderRadius: 75 }}
+            />
             
-            <Text style={styles.title}>Login</Text>
+            <Text style={styles.title}>Login To View Your Care Calls</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
     },
     title: {
-        fontSize: 24,
+        fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 24,
+        marginVertical: 24,
     },
     input: {
         width: '100%',

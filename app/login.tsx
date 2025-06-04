@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +16,13 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.container}>
+            <Image
+                source={require('../assets/images/favicon.png')} // Replace with your logo path
+                style={{ width: 100, height: 100, marginBottom: 20, alignSelf: 'center'}}
+            />
+
             <Text style={styles.title}>Login</Text>
+            
             <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -32,9 +38,9 @@ const LoginScreen = () => {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            {/* <TouchableOpacity style={styles.button} onPress={handleLogin}>
                 <Text style={styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 };
