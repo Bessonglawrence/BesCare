@@ -58,22 +58,10 @@ export default function HomePage({navigation}: {navigation: any}) {
     const filteredAppointments = appointments.filter(a => a.date === selectedDate);
 
 
-    // Hook to exit app on hardware back button press
-    // const useExitOnBack = () => {
-    //     useEffect(() => {
-    //         const onBackPress = () => {
-    //             BackHandler.exitApp();
-    //             return true;
-    //         };
-    //         BackHandler.addEventListener('hardwareBackPress', onBackPress);
-    //         return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    //     }, []);
-    // };
-
     useEffect(() => {
         const onBackPress = () => {
             // Show confirmation alert before exiting
-            // Use React Native's Alert API
+    
             Alert.alert(
                 'Exit App',
                 'Are you sure you want to exit?',
