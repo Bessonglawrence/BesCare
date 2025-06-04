@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 import NotificationsScreen from './notifications';
+import LoginScreen from '@/screens/Login/Login.screen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const indexPage = () => {
                 <Stack.Screen name="Home" component={HomePage} />
                 <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
                 <Stack.Screen name="Notifications" component={NotificationsScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
             </Stack.Navigator>
         </View>
     );

@@ -7,9 +7,9 @@ import Profile from '../screens/Profile/Profile.screen';
 const Route: React.FC = () => {
     return (
         <Stack>
-            <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
-            <Stack.Screen name="Notifications" component={Notifications} options={{ title: 'Notifications' }} />
-            <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+            <Stack.Screen name="Home" options={{ title: 'Home' }} component={Home} />
+            <Stack.Screen name="Notifications" options={{ title: 'Notifications' }} component={Notifications} />
+            <Stack.Screen name="Profile" options={{ title: 'Profile' }} component={Profile} />
         </Stack>
     );
 };
