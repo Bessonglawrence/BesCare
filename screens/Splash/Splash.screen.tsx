@@ -8,6 +8,7 @@ const { width } = Dimensions.get('window');
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
+  Onboarding: undefined;
   // Add other screens here as needed
 };
 
@@ -19,7 +20,7 @@ const SplashScreen: React.FC = () => {
 
     useEffect(() => {
         const navigateToLogin = () => {
-            navigation.navigate('Login');
+            navigation.navigate('Onboarding'); // Change to 'Login' if you want to navigate to the login screen
         };
 
         Animated.sequence([
@@ -64,7 +65,7 @@ const SplashScreen: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff', // Change background color as needed
+        backgroundColor: '#FBF6F1', // Even lighter brown
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -73,8 +74,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: width * 0.5,
-        height: width * 0.5,
+        width: width * 0.7,
+        height: width * 0.7,
+        borderRadius: (width * 0.7) / 2, // Make it circular
     },
 });
 

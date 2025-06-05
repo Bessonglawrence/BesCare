@@ -61,6 +61,9 @@ export default function HomePage({navigation}: {navigation: any}) {
     useEffect(() => {
         const onBackPress = () => {
             // Show confirmation alert before exiting
+            if (navigation.isFocused && typeof navigation.isFocused === 'function' && !navigation.isFocused()) {
+                return false;
+            }
     
             Alert.alert(
                 'Exit App',

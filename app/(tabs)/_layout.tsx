@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LoginScreen from '@/screens/Login/Login.screen';
 import ProfileScreen from './profile';
 import SplashScreen from '@/screens/Splash/Splash.screen';
+import OnboardingScreen from '@/screens/Onboarding/Onboarding.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ function RootLayout() {
      return (
     <Stack.Navigator>
     <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Onboarding" options={{ headerShown: false }} component={OnboardingScreen} />
     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="Home"

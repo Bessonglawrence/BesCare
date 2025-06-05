@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, BackHandler, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context';
-const LoginScreen = ({navigation}: {navigation: any}) => {
+
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ScrollView } from 'react-native-gesture-handler';
+
+type RootStackParamList = {
+    Home: undefined;
+    Login: undefined;
+    // add other routes here if needed
+};
+
+const LoginScreen = ({ navigation }: { navigation: NativeStackNavigationProp<RootStackParamList, 'Home'> }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,47 +27,53 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
         navigation.navigate('Home'); // Navigate to Home screen after login
     };
 
+
     return (
-        <SafeAreaView style={styles.container}>
-            <Image
-                source={require('../../assets/images/BesCare.png')} // Replace with your logo path
-                style={{ width: 150, height: 150, borderRadius: 75 }}
-            />
+        <View style={styles.container}>
             
-            <Text style={styles.title}>Login To View Your Care Calls</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-            />
-            <View style={styles.passwordContainer}>
+                <Image
+                    source={require('../../assets/images/BesCare.png')} // Replace with your logo path
+                    style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 24 }}
+                />                  
+                <Text style={styles.title}>Login To View Your Care Calls</Text>
                 <TextInput
-                    style={styles.passwordInput}
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!isPasswordVisible}
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                 />
-                <TouchableOpacity
-                    style={styles.toggleButton}
-                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                >
-                    <Text style={styles.toggleButtonText}>
-                        {isPasswordVisible ? (
-                            <Ionicons name="eye-off" size={24} />
-                        ) : (
-                            <Ionicons name="eye" size={24} />
-                        )}
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={styles.passwordInput}
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry={!isPasswordVisible}
+                    />
+                    <TouchableOpacity
+                        style={styles.toggleButton}
+                        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    >
+                        <Text style={styles.toggleButtonText}>
+                            {isPasswordVisible ? (
+                                <Ionicons name="eye-off" size={24} />
+                            ) : (
+                                <Ionicons name="eye" size={24} />
+                            )}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={() => Alert.alert('Forgot Password', 'Password reset instructions will be sent to your email.')}>
+                    <Text style={{ color: '#007BFF', marginBottom: 16, alignSelf: 'flex-end' }}>
+                        Forgot Password?
                     </Text>
                 </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-        </SafeAreaView>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+        </View>
     );
 };
 
@@ -67,7 +83,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fcf8f3',
     },
     title: {
         fontSize: 16,
@@ -77,22 +93,22 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         height: 50,
-        borderWidth: 1,
-        borderColor: '#ccc',
+        borderWidth: 0.5,
+        borderColor: 'lightgray',
         borderRadius: 8,
         paddingHorizontal: 16,
         marginBottom: 16,
-        backgroundColor: '#fff',
+        backgroundColor: 'ghostwhite',
     },
     passwordContainer: {
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ccc',
+        borderWidth: 0.5,
+        borderColor: 'lightgray',
         borderRadius: 8,
         marginBottom: 16,
-        backgroundColor: '#fff',
+        backgroundColor: 'ghostwhite',
     },
     passwordInput: {
         flex: 1,
@@ -123,3 +139,7 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+function useEffect(arg0: () => () => any, arg1: never[]) {
+    throw new Error('Function not implemented.');
+}
