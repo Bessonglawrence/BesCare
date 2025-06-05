@@ -14,7 +14,8 @@ const appointments = [
         serviceUserContact: "+44 7911 123456",
         nextOfKin: "Mary Doe (+44 7911 654321)",
         careList: ["Medication support", "Personal care", "Meal preparation", "Hydration monitoring", "Vital signs check", "Companionship"],
-        address: "12 Baker Street, London, W1U 3AA"
+        address: "12 Baker Street, London, W1U 3AA",
+        medications: ["Aspirin 75mg", "Lisinopril 10mg", "Metformin 500mg"]
     },
     {
         id: '2',
@@ -31,7 +32,8 @@ const appointments = [
         serviceUserContact: "+44 7911 223344",
         nextOfKin: "Paul Smith (+44 7911 334455)",
         careList: ["Companionship", "Mobility assistance", "Welfare check"],
-        address: "22 Abbey Road, London, NW8 9AY"
+        address: "22 Abbey Road, London, NW8 9AY",
+        medications: ["Metformin 500mg", "Atorvastatin 20mg", "Amlodipine 5mg"]
     },
     {
         id: '3',
@@ -48,7 +50,8 @@ const appointments = [
         serviceUserContact: "+44 7911 223344",
         nextOfKin: "Paul Smith (+44 7911 334455)",
         careList: ["Personal care", "Meal preparation", "Bathing assistance", "Emotional support"],
-        address: "22 Abbey Road, London, NW8 9AY"
+        address: "22 Abbey Road, London, NW8 9AY",
+        medications: ["Metformin 500mg", "Atorvastatin 20mg", "Ramipril 5mg"]
     },
     {
         id: '4',
@@ -65,7 +68,8 @@ const appointments = [
         serviceUserContact: "+44 7911 556677",
         nextOfKin: "Robert Johnson (+44 7911 778899)",
         careList: ["Mobility assistance", "Companionship", "Medication support", "Safety monitoring"],
-        address: "5 Downing Street, London, SW1A 2AA"
+        address: "5 Downing Street, London, SW1A 2AA",
+        medications: ["Warfarin 2mg", "Simvastatin 20mg", "Bisoprolol 5mg"]
     },
     {
         id: '5',
@@ -82,7 +86,8 @@ const appointments = [
         serviceUserContact: "+44 7911 998877",
         nextOfKin: "Linda Brown (+44 7911 887766)",
         careList: ["Medication support", "Personal care", "Wellbeing check"],
-        address: "18 Oxford Street, London, W1D 1BS"
+        address: "18 Oxford Street, London, W1D 1BS",
+        medications: ["Amlodipine 5mg", "Ramipril 5mg", "Paracetamol 500mg"]
     },
     {
         id: '6',
@@ -99,7 +104,8 @@ const appointments = [
         serviceUserContact: "+44 7911 665544",
         nextOfKin: "Peter Green (+44 7911 443322)",
         careList: ["Meal preparation", "Medication support", "Dietary monitoring", "Mobility check"],
-        address: "7 Piccadilly, London, W1J 0DA"
+        address: "7 Piccadilly, London, W1J 0DA",
+        medications: ["Levothyroxine 50mcg", "Metformin 500mg", "Atorvastatin 20mg"]
     },
     {
         id: '7',
@@ -116,7 +122,8 @@ const appointments = [
         serviceUserContact: "+44 7911 332211",
         nextOfKin: "Steve Prince (+44 7911 221133)",
         careList: ["Personal care", "Companionship", "Vital signs check", "Health monitoring"],
-        address: "3 King’s Road, London, SW3 4NT"
+        address: "3 King’s Road, London, SW3 4NT",
+        medications: ["Paracetamol 500mg", "Aspirin 75mg", "Simvastatin 20mg"]
     },
     {
         id: '8',
@@ -133,7 +140,8 @@ const appointments = [
         serviceUserContact: "+44 7911 445566",
         nextOfKin: "Julia Hunt (+44 7911 667788)",
         careList: ["Physical therapy", "Meal preparation", "Medication support", "Exercise supervision"],
-        address: "9 Queen’s Gate, London, SW7 5JT"
+        address: "9 Queen’s Gate, London, SW7 5JT",
+        medications: ["Simvastatin 20mg", "Metformin 500mg", "Amlodipine 5mg"]
     },
     {
         id: '9',
@@ -150,7 +158,8 @@ const appointments = [
         serviceUserContact: "+44 7911 778899",
         nextOfKin: "Mark Apple (+44 7911 889900)",
         careList: ["Companionship", "Medication support", "Welfare check"],
-        address: "15 Regent Street, London, SW1Y 4LR"
+        address: "15 Regent Street, London, SW1Y 4LR",
+        medications: ["Omeprazole 20mg", "Atorvastatin 20mg", "Levothyroxine 50mcg"]
     },
     {
         id: '10',
@@ -167,7 +176,8 @@ const appointments = [
         serviceUserContact: "+44 7911 112233",
         nextOfKin: "Amal Clooney (+44 7911 334455)",
         careList: ["Medication support", "Companionship", "Blood pressure monitoring"],
-        address: "1 Trafalgar Square, London, WC2N 5DN"
+        address: "1 Trafalgar Square, London, WC2N 5DN",
+        medications: ["Bisoprolol 5mg", "Amlodipine 5mg", "Ramipril 5mg"]
     },
     {
         id: '11',
@@ -184,7 +194,8 @@ const appointments = [
         serviceUserContact: "+44 7911 223355",
         nextOfKin: "Billy Montana (+44 7911 556677)",
         careList: ["Music therapy", "Personal care", "Mood enhancement"],
-        address: "21 Camden High Street, London, NW1 7JE"
+        address: "21 Camden High Street, London, NW1 7JE",
+        medications: ["Sertraline 50mg", "Metformin 500mg", "Aspirin 75mg"]
     },
     {
         id: '12',
@@ -201,7 +212,8 @@ const appointments = [
         serviceUserContact: "+44 7911 334466",
         nextOfKin: "Sarah Malcolm (+44 7911 667788)",
         careList: ["Meal preparation", "Companionship", "Medication support", "Nutritional support"],
-        address: "8 Fleet Street, London, EC4Y 1AA"
+        address: "8 Fleet Street, London, EC4Y 1AA",
+        medications: ["Ramipril 5mg", "Atorvastatin 20mg", "Simvastatin 20mg"]
     },
     {
         id: '13',
@@ -218,7 +230,8 @@ const appointments = [
         serviceUserContact: "+44 7911 445577",
         nextOfKin: "Eric Roberts (+44 7911 778899)",
         careList: ["Personal care", "Welfare check"],
-        address: "14 Baker Street, London, W1U 3BS"
+        address: "14 Baker Street, London, W1U 3BS",
+        medications: ["Furosemide 40mg", "Metformin 500mg", "Amlodipine 5mg"]
     },
     {
         id: '14',
@@ -235,7 +248,8 @@ const appointments = [
         serviceUserContact: "+44 7911 556688",
         nextOfKin: "Jane Spacey (+44 7911 889900)",
         careList: ["Medication support", "Mobility assistance", "Vital signs check", "Exercise supervision"],
-        address: "30 Charing Cross Road, London, WC2H 0AA"
+        address: "30 Charing Cross Road, London, WC2H 0AA",
+        medications: ["Aspirin 75mg", "Simvastatin 20mg", "Ramipril 5mg"]
     },
     {
         id: '15',
@@ -252,7 +266,8 @@ const appointments = [
         serviceUserContact: "+44 7911 667799",
         nextOfKin: "Richard Croft (+44 7911 998877)",
         careList: ["Personal care", "Companionship", "Welfare check"],
-        address: "2 Victoria Street, London, SW1H 0NE"
+        address: "2 Victoria Street, London, SW1H 0NE",
+        medications: ["Metformin 500mg", "Atorvastatin 20mg", "Levothyroxine 50mcg"]
     },
     {
         id: '16',
@@ -269,7 +284,8 @@ const appointments = [
         serviceUserContact: "+44 7911 778800",
         nextOfKin: "Robin Tyson (+44 7911 889911)",
         careList: ["Physical therapy", "Meal preparation", "Medication support", "Exercise supervision"],
-        address: "11 Whitehall, London, SW1A 2DD"
+        address: "11 Whitehall, London, SW1A 2DD",
+        medications: ["Atorvastatin 20mg", "Simvastatin 20mg", "Amlodipine 5mg"]
     },
     {
         id: '17',
@@ -286,7 +302,8 @@ const appointments = [
         serviceUserContact: "+44 7911 889922",
         nextOfKin: "Lisa Simone (+44 7911 223344)",
         careList: ["Medication support", "Personal care", "Wellbeing check"],
-        address: "6 Leicester Square, London, WC2H 7NA"
+        address: "6 Leicester Square, London, WC2H 7NA",
+        medications: ["Ramipril 5mg", "Metformin 500mg", "Aspirin 75mg"]
     },
     {
         id: '18',
@@ -303,7 +320,8 @@ const appointments = [
         serviceUserContact: "+44 7911 334455",
         nextOfKin: "Constance Wilde (+44 7911 556677)",
         careList: ["Companionship", "Meal preparation", "Medication support", "Reading assistance"],
-        address: "4 Strand, London, WC2N 5HR"
+        address: "4 Strand, London, WC2N 5HR",
+        medications: ["Levothyroxine 50mcg", "Simvastatin 20mg", "Bisoprolol 5mg"]
     },
     {
         id: '19',
@@ -320,7 +338,8 @@ const appointments = [
         serviceUserContact: "+44 7911 445588",
         nextOfKin: "Simon Abdul (+44 7911 667700)",
         careList: ["Personal care", "Medication support", "Welfare check"],
-        address: "17 Bishopsgate, London, EC2N 3AR"
+        address: "17 Bishopsgate, London, EC2N 3AR",
+        medications: ["Amlodipine 5mg", "Atorvastatin 20mg", "Ramipril 5mg"]
     },
     {
         id: '20',
@@ -337,7 +356,8 @@ const appointments = [
         serviceUserContact: "+44 7911 556699",
         nextOfKin: "Lianne Tarantino (+44 7911 778811)",
         careList: ["Meal preparation", "Companionship", "Medication support", "Conversation therapy"],
-        address: "25 Baker Street, London, W1U 8EQ"
+        address: "25 Baker Street, London, W1U 8EQ",
+        medications: ["Bisoprolol 5mg", "Metformin 500mg", "Simvastatin 20mg"]
     },
 ];
 
