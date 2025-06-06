@@ -398,4 +398,6 @@ export type Appointment = {
     nextOfKin: string;
     careList: string[];
     address: string;
+    medications: string[];
+    carePlan: string;
 }; 

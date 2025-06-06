@@ -4,6 +4,8 @@ import NavBar from '@/components/NavBar/NavBar.component';
 import { Animated, Dimensions } from 'react-native';
 import React, { useRef, useEffect,useState  } from 'react';
 import Checkbox from 'expo-checkbox';
+import * as Linking from 'expo-linking';
+import { Ionicons } from '@expo/vector-icons';
 type AppointmentDetailsProps = {
     date: string;
     userName: string;
@@ -19,6 +21,8 @@ type AppointmentDetailsProps = {
     nextOfKin: string;
     careList: string[];
     address: string;
+    medications?: string[]; // Add this line to fix the error
+    carePlan?: string;         // Optionally add this if you use carePlan as well
 };
 
 type RootStackParamList = {
@@ -43,6 +47,8 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
         nextOfKin,
         careList,
         address = '', // Provide a default value if address is missing
+        medications = [], // Provide a default value if medication is missing
+        carePlan = '', // Provide a default value if carePlan is missing
     } = route.params;
 
     const [activeTab, setActiveTab] = useState(0);
@@ -53,7 +59,10 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const translateX = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
-        // No animation needed
+        Animated.spring(translateX, {
+            toValue: activeTab * SCREEN_WIDTH,
+            useNativeDriver: true,
+        }).start();
     }, [activeTab, SCREEN_WIDTH, translateX]);
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -127,6 +136,68 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <Text style={styles.value}>{careNotes}</Text>
                         <Text style={styles.label}>Carer Name:</Text>
                         <Text style={styles.value}>{carerName}</Text>
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            style={{
+                                backgroundColor: '#f5f5f5',
+                                marginTop: 10,
+                                padding: 10,
+                                //borderRadius: 8,
+                                // Shadow for iOS
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.15,
+                                shadowRadius: 4,
+                                // Elevation for Android
+                                elevation: 4,
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 2, borderColor: '#eee' }}>
+                                <Ionicons name="medkit" size={24} color="#1976d2" />
+                                <Text style={[styles.label, { marginBottom: 10, fontSize: 16, marginLeft: 8 }]}>MEDICATIONS:</Text>
+                            </View>
+                            {medications.length > 0 ? (
+                                medications.map((med, idx) => (
+                                    <Text key={idx} style={styles.value}>• {med}</Text>
+                                ))
+                            ) : (
+                                <Text style={styles.value}>None</Text>
+                            )}
+                            <TouchableOpacity
+                                style={{ marginTop: 10, alignItems: 'center', padding: 10, backgroundColor: '#1976d2', borderRadius: 8 }}
+                                onPress={() => {
+                                    // Implement medication recording logic here
+                                    console.log('Record Medication');
+                                }}
+                            >
+                                <Text>Record OutCome</Text>
+                            </TouchableOpacity>
+
+                        </TouchableOpacity>
+
+                        <Text style={styles.label}>Care Plan:</Text>
+                        {carePlan ? (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    // Implement download logic here
+                                    // For example, open the carePlan URL in the browser
+                                    if (carePlan) {
+                                        Linking.openURL(carePlan).catch(err => {
+                                            console.warn('Failed to open URL:', err);
+                                        });
+                                    }
+                                    // For now, just log or show a message
+                                    console.log('Download Care Plan:', carePlan);
+                                }}
+                                style={{ flexDirection: 'row', alignItems: 'center' }}
+                            >
+                                <Text style={[styles.value, { color: '#1976d2', textDecorationLine: 'underline' }]}>
+                                    Download Care Plan
+                                </Text>
+                            </TouchableOpacity>
+                        ) : (
+                            <Text style={styles.value}>None</Text>
+                        )}
                         <Text style={styles.label}>Care List:</Text>
                         <View style={{ flexWrap: 'wrap', marginBottom: 30 }}>
                             {careList.map((item, idx) => (
