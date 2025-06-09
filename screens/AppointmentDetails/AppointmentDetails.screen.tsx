@@ -136,6 +136,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <Text style={styles.value}>{careNotes}</Text>
                         <Text style={styles.label}>Carer Name:</Text>
                         <Text style={styles.value}>{carerName}</Text>
+
                         <TouchableOpacity
                             activeOpacity={0.5}
                             style={{
@@ -170,34 +171,54 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                     console.log('Record Medication');
                                 }}
                             >
-                                <Text>Record OutCome</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Record OutCome</Text>
                             </TouchableOpacity>
 
                         </TouchableOpacity>
 
-                        <Text style={styles.label}>Care Plan:</Text>
-                        {carePlan ? (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    // Implement download logic here
-                                    // For example, open the carePlan URL in the browser
-                                    if (carePlan) {
-                                        Linking.openURL(carePlan).catch(err => {
-                                            console.warn('Failed to open URL:', err);
-                                        });
-                                    }
-                                    // For now, just log or show a message
-                                    console.log('Download Care Plan:', carePlan);
-                                }}
-                                style={{ flexDirection: 'row', alignItems: 'center' }}
-                            >
-                                <Text style={[styles.value, { color: '#1976d2', textDecorationLine: 'underline' }]}>
-                                    Download Care Plan
-                                </Text>
-                            </TouchableOpacity>
-                        ) : (
-                            <Text style={styles.value}>None</Text>
-                        )}
+                        <View
+                            style={{
+                                backgroundColor: '#f5f5f5',
+                                marginTop: 25,
+                                padding: 10,
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.15,
+                                shadowRadius: 4,
+                                elevation: 4,
+                            }}
+                        >
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 2, borderColor: '#eee' }}>
+                                <Ionicons name="file-tray" size={24} color="#1976d2" />
+                                <Text style={[styles.label, { marginBottom: 10, fontSize: 16, marginLeft: 8 }]}>Care Plan:</Text>
+                            </View>
+                               
+                            {carePlan ? (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        // Implement download logic here
+                                        // For example, open the carePlan URL in the browser
+                                        if (carePlan) {
+                                            Linking.openURL(carePlan).catch(err => {
+                                                console.warn('Failed to open URL:', err);
+                                            });
+                                        }
+                                        // For now, just log or show a message
+                                        console.log('Download Care Plan:', carePlan);
+                                    }}
+                                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                                >
+                                    <Text style={[styles.value, { color: '#1976d2', textDecorationLine: 'underline' }]}>
+                                        Download Care Plan
+                                    </Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <Text style={styles.value}>None</Text>
+                            )}
+                            
+                        </View>
+
+                        
                         <Text style={styles.label}>Care List:</Text>
                         <View style={{ flexWrap: 'wrap', marginBottom: 30 }}>
                             {careList.map((item, idx) => (
