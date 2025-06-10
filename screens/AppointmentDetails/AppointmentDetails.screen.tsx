@@ -6,6 +6,7 @@ import React, { useRef, useEffect,useState  } from 'react';
 import Checkbox from 'expo-checkbox';
 import * as Linking from 'expo-linking';
 import { Ionicons } from '@expo/vector-icons';
+import styles from './AppointmentDetails.styles';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -139,13 +140,21 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                 ) : (
                     // Care information tab
                     <>
-                        <Text style={styles.label}>Time:</Text>
-                        <Text style={styles.value}>{date}</Text>
-                        <Text style={styles.value}>{startTime} - {endTime}</Text>
-                        <Text style={styles.label}>Attended:</Text>
-                        <Text style={styles.value}>{attended ? 'Yes' : 'No'}</Text>
-                        <Text style={styles.label}>Previous Care Notes:</Text>
-                        <Text style={styles.value}>{careNotes}</Text>
+                        <View style={[styles.card]} >
+                            <View style={styles.cardHeader}>
+                                <Ionicons name="time" size={24} color="#1976d2" />
+                                <Text style={styles.label}>CALL TIME AND DATE:</Text>
+                            </View>
+                            <Text style={styles.value}>{startTime} - {endTime}</Text>
+                        </View>
+
+                         <View style={[styles.card]} >
+                            <View style={styles.cardHeader}>
+                                <Ionicons name="book" size={24} color="#1976d2" />
+                                <Text style={styles.label}>PREVIOUS NOTES:</Text>
+                            </View>
+                            <Text style={[styles.value,{padding: 10, lineHeight: 24}]}>{careNotes}</Text>
+                        </View>
 
                         <TouchableOpacity
                             activeOpacity={0.5}
@@ -172,15 +181,13 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             >
                                 <Text style={styles.outComeButtonText}>Record OutCome</Text>
                             </TouchableOpacity>
-
                         </TouchableOpacity>
 
                         <View style={styles.card}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 2, borderColor: '#eee' }}>
+                            <View style={styles.cardHeader}>
                                 <Ionicons name="file-tray" size={24} color="#1976d2" />
                                 <Text style={styles.label}>CARE PLAN AND OTHER DOCUMENTS:</Text>
                             </View>
-
                             {carePlan ? (
                                 <TouchableOpacity
                                     onPress={() => {
@@ -207,17 +214,16 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             ) : (
                                 <Text style={styles.value}>None</Text>
                             )}
-                            
                         </View>
 
-                         <View style={styles.card} >
+                         <View style={[styles.card,{marginBottom: 38}]} >
                             <View style={styles.cardHeader}>
-                                <Ionicons name="medkit" size={24} color="#1976d2" />
+                                <Ionicons name="list" size={24} color="#1976d2" />
                                 <Text style={styles.label}>CARE LIST:</Text>
                             </View>
                             <View style={{ flexWrap: 'wrap' }}>
                             {careList.map((item, idx) => (
-                                <Text key={idx} style={[styles.value,]}>• {item}</Text>
+                                <Text key={idx} style={[styles.value,{paddingBottom: 5}]}>• {item}</Text>
                             ))}
                             </View>
                         </View>
@@ -226,254 +232,109 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                 )}
             </ScrollView>
             <View style={styles.buttonsView}>
-                <TouchableOpacity
-                    style={styles.button1}
-                    onPress={() => {
-                        // Handle first button press
-                        console.log('Start Call Pressed');
-                    }}
-                >
-                    <Text style={styles.buttonText}>Start Call</Text>
-                </TouchableOpacity>
+                {/* Disable buttons if date is not today */}
+                {(() => {
+                    // Parse the date string and compare with today
+                    const today = new Date();
+                    const callDate = new Date(date);
+                    // Compare only the date part (ignore time)
+                    const isToday =
+                        today.getFullYear() === callDate.getFullYear() &&
+                        today.getMonth() === callDate.getMonth() &&
+                        today.getDate() === callDate.getDate();
 
-                <TouchableOpacity
-                    style={styles.button2}
-                    onPress={() => {
-                        // Handle second button press
-                        setModalVisible(true);
-                    }}
-                >
-                    <Text style={[styles.buttonText,{color: '#1976d2'}]}>Add Notes</Text>
-                    {/* Modal for adding notes */}
-                    <Modal
-                        visible={modalVisible}
-                        animationType="slide"
-                        transparent={true}
-                        onRequestClose={() => setModalVisible(false)}
-                    >
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+                    return (
+                        <>
                             <TouchableOpacity
-                                style={{ position: 'absolute', top: 60, alignSelf: 'center', zIndex: 1, padding: 10, backgroundColor: 'brown', borderRadius: 50, paddingHorizontal: 15, paddingVertical: 5 }}
-                                activeOpacity={0.7}
-                                onPress={() => setModalVisible(false)}
+                                style={[
+                                    styles.button1,
+                                    !isToday && { opacity: 0.5 }
+                                ]}
+                                onPress={() => {
+                                    if (isToday) {
+                                        // Handle first button press
+                                        console.log('Start Call Pressed');
+                                    }
+                                }}
+                                disabled={!isToday}
                             >
-                                <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>X</Text>
+                                <Text style={styles.buttonText}>Start Call</Text>
                             </TouchableOpacity>
-                
-                            {/* Modal content */}
-                            <View style={{ width: '90%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10, alignSelf: 'center' }}>Add Notes</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
-                                    <Checkbox
-                                        value={alertSupervisor}
-                                        onValueChange={setAlertSupervisor}
-                                        color={alertSupervisor ? '#1976d2' : undefined}
-                                        disabled={false}
-                                    />
-                                    <Text style={{ marginLeft: 8, fontSize: 16 }}>Alert Supervisor</Text>
-                                </View>
 
-                                <TextInput
-                                    style={styles.textInput}
-                                    multiline
-                                    numberOfLines={4}
-                                    placeholder="Enter your notes here..."
-                                    value={notesInput}
-                                    onChangeText={setNotesInput}
-                                />
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                    <TouchableOpacity
-                                        style={{ marginRight: 15 }}
-                                        onPress={() => setModalVisible(false)}
-                                    >
-                                        <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Cancel</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            // Handle save notes logic here
-                                            setModalVisible(false);
-                                        }}
-                                    >
-                                        <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Save</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
-                    </Modal>
-                </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[
+                                    styles.button2,
+                                    !isToday && { opacity: 0.5 }
+                                ]}
+                                onPress={() => {
+                                    if (isToday) {
+                                        setModalVisible(true);
+                                    }
+                                }}
+                                disabled={!isToday}
+                            >
+                                <Text style={[styles.buttonText, { color: '#1976d2' }]}>Add Notes</Text>
+                                {/* Modal for adding notes */}
+                                <Modal
+                                    visible={modalVisible}
+                                    animationType="slide"
+                                    transparent={true}
+                                    onRequestClose={() => setModalVisible(false)}
+                                >
+                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
+                                        <TouchableOpacity
+                                            style={{ position: 'absolute', top: 60, alignSelf: 'center', zIndex: 1, padding: 10, backgroundColor: 'brown', borderRadius: 50, paddingHorizontal: 15, paddingVertical: 5 }}
+                                            activeOpacity={0.7}
+                                            onPress={() => setModalVisible(false)}
+                                        >
+                                            <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>X</Text>
+                                        </TouchableOpacity>
+                            
+                                        {/* Modal content */}
+                                        <View style={{ width: '90%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
+                                            <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10, alignSelf: 'center' }}>Add Notes</Text>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
+                                                <Checkbox
+                                                    value={alertSupervisor}
+                                                    onValueChange={setAlertSupervisor}
+                                                    color={alertSupervisor ? '#1976d2' : undefined}
+                                                    disabled={false}
+                                                />
+                                                <Text style={{ marginLeft: 8, fontSize: 16 }}>Alert Supervisor</Text>
+                                            </View>
+
+                                            <TextInput
+                                                style={styles.textInput}
+                                                multiline
+                                                numberOfLines={4}
+                                                placeholder="Enter your notes here..."
+                                                value={notesInput}
+                                                onChangeText={setNotesInput}
+                                            />
+                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                                <TouchableOpacity
+                                                    style={{ marginRight: 15 }}
+                                                    onPress={() => setModalVisible(false)}
+                                                >
+                                                    <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Cancel</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        // Handle save notes logic here
+                                                        setModalVisible(false);
+                                                    }}
+                                                >
+                                                    <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Save</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </Modal>
+                            </TouchableOpacity>
+                        </>
+                    );
+                })()}
             </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    detailsContainer: {
-        padding: 20,
-        backgroundColor: '#fff',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    caregiverPic: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        backgroundColor: '#ccc',
-        marginRight: 16,
-    },
-    headerText: {
-        flex: 1,
-    },
-    userName: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#222',
-    },
-    date: {
-        fontSize: 16,
-        color: '#666',
-        marginTop: 4,
-    },
-    label: {
-        fontWeight: '600',
-        marginTop: 12,
-        color: '#1976d2',
-        marginBottom: 10, 
-        fontSize: 16, 
-        marginLeft: 8 
-    },
-    value: {
-        fontSize: 16,
-        color: '#333',
-        marginTop: 2,
-    },
-    address: {
-        fontSize: 16,
-        color: '#333',
-        marginTop: 2,
-    },
-    card: {
-        backgroundColor: '#f5f5f5',
-        padding: 10,
-        marginVertical: 15,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        elevation: 4,
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#1976d2',
-    },
-    outComeButton: {
-        backgroundColor: '#1976d2',
-        paddingVertical: 10,
-        borderRadius: 8,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    outComeButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-    medicationText: {
-        fontSize: 16,
-        color: '#333',
-        marginTop: 2,
-    },
-    medicationList: {
-        marginTop: 10,
-        paddingLeft: 20,
-        fontSize: 16,
-        color: '#333',
-        marginBottom: 10,
-    },
-    cardHeader: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 2,
-        borderColor: '#eee',
-    },
-   buttonsView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 20,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderColor: '#eee',
-    },
-    button1: {
-        flex: 1,
-        backgroundColor: '#1976d2',
-        paddingVertical: 14,
-        borderRadius: 8,
-        marginHorizontal: 5,
-        alignItems: 'center',
-    },
-    button2:{
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingVertical: 14,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#1976d2',
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-    checkboxContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#f5f5f5',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        elevation: 4,
-    },
-    checkboxLabel: {
-        marginLeft: 8,
-        fontSize: 16,
-        color: '#333',
-        fontWeight: '500',
-    },
-    checkbox: {
-        marginRight: 10,
-        borderColor: '#1976d2',
-        borderWidth: 1,
-        backgroundColor: '#fff',
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    checkboxChecked: {
-        backgroundColor: '#1976d2',
-        borderColor: '#1976d2',
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textInput:{
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        minHeight: 80,
-        padding: 10,
-        textAlignVertical: 'top',
-        marginBottom: 20,
-    }
-});
