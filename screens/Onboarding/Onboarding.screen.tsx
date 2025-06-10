@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity, Image, Animated } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity, Animated } from 'react-native';
 
 const { width } = Dimensions.get('window');
 

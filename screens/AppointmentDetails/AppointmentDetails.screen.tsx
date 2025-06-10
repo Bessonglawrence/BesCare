@@ -6,6 +6,7 @@ import React, { useRef, useEffect,useState  } from 'react';
 import Checkbox from 'expo-checkbox';
 import * as Linking from 'expo-linking';
 import { Ionicons } from '@expo/vector-icons';
+
 type AppointmentDetailsProps = {
     date: string;
     userName: string;
@@ -68,9 +69,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [notesInput, setNotesInput] = useState('');
     const [alertSupervisor, setAlertSupervisor] = useState(false);
-    function setAnotherCheckbox(arg0: (prev: any) => boolean): void {
-        throw new Error('Function not implemented.');
-    }
+    
 
     return (
         <View style={{ flex: 1 }}>
@@ -106,23 +105,36 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                 {activeTab === 0 ? (
                     // Client information tab
                     <>
-                        <View style={styles.header}>
-                            <Image source={{ uri: caregiverPic }} style={styles.caregiverPic} />
-                            <View style={styles.headerText}>
-                                <Text style={styles.userName}>{userName}</Text>
-                                <Text style={styles.date}>{date}</Text>
+                        <View
+                            style={{
+                                backgroundColor: '#f5f5f5',
+                                marginVertical: 25,
+                                padding: 10,
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 2 },
+                                shadowOpacity: 0.15,
+                                shadowRadius: 4,
+                                elevation: 4,
+                            }}
+                        >
+                             <View style={[styles.header, { marginBottom: 16, borderBottomWidth: 2, borderColor: '#eee', paddingBottom: 5 }]}>
+                                <Image source={{ uri: caregiverPic }} style={styles.caregiverPic} />
+                                <View style={styles.headerText}>
+                                    <Text style={styles.userName}>{userName}</Text>
+                                    <Text style={styles.date}>{date}</Text>
+                                </View>
                             </View>
-                        </View>
-                        <Text style={styles.label}>Service User Name:</Text>
-                        <Text style={styles.value}>{serviceUserName}</Text>
-                        <Text style={styles.label}>Service User Age:</Text>
-                        <Text style={styles.value}>{serviceUserAge}</Text>
-                        <Text style={styles.label}>Service User Contact:</Text>
-                        <Text style={styles.value}>{serviceUserContact}</Text>
-                        <Text style={styles.label}>Next of Kin:</Text>
-                        <Text style={styles.value}>{nextOfKin}</Text>
-                        <Text style={[styles.label]}>Address:</Text>
-                        <Text style={styles.value}>{address}</Text>
+                            <Text style={styles.label}>Service User Name:</Text>
+                            <Text style={styles.value}>{serviceUserName}</Text>
+                            <Text style={styles.label}>Service User Age:</Text>
+                            <Text style={styles.value}>{serviceUserAge}</Text>
+                            <Text style={styles.label}>Service User Contact:</Text>
+                            <Text style={styles.value}>{serviceUserContact}</Text>
+                            <Text style={styles.label}>Next of Kin:</Text>
+                            <Text style={styles.value}>{nextOfKin}</Text>
+                            <Text style={[styles.label]}>Address:</Text>
+                            <Text style={styles.value}>{address}</Text>
+                        </View>     
                     </>
                 ) : (
                     // Care information tab
@@ -134,65 +146,41 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <Text style={styles.value}>{attended ? 'Yes' : 'No'}</Text>
                         <Text style={styles.label}>Previous Care Notes:</Text>
                         <Text style={styles.value}>{careNotes}</Text>
-                        <Text style={styles.label}>Carer Name:</Text>
-                        <Text style={styles.value}>{carerName}</Text>
 
                         <TouchableOpacity
                             activeOpacity={0.5}
-                            style={{
-                                backgroundColor: '#f5f5f5',
-                                marginTop: 10,
-                                padding: 10,
-                                //borderRadius: 8,
-                                // Shadow for iOS
-                                shadowColor: '#000',
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.15,
-                                shadowRadius: 4,
-                                // Elevation for Android
-                                elevation: 4,
-                            }}
+                            style={styles.card}
                         >
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 2, borderColor: '#eee' }}>
+                            <View style={styles.cardHeader}>
                                 <Ionicons name="medkit" size={24} color="#1976d2" />
-                                <Text style={[styles.label, { marginBottom: 10, fontSize: 16, marginLeft: 8 }]}>MEDICATIONS:</Text>
+                                <Text style={styles.label}>MEDICATIONS:</Text>
                             </View>
                             {medications.length > 0 ? (
                                 medications.map((med, idx) => (
-                                    <Text key={idx} style={styles.value}>• {med}</Text>
+                                    <Text key={idx} style={[styles.value, { marginVertical: 6 }]}>• {med}</Text>
                                 ))
                             ) : (
                                 <Text style={styles.value}>None</Text>
                             )}
                             <TouchableOpacity
-                                style={{ marginTop: 10, alignItems: 'center', padding: 10, backgroundColor: '#1976d2', borderRadius: 8 }}
+                                style={styles.outComeButton}
+                                activeOpacity={0.7}
                                 onPress={() => {
                                     // Implement medication recording logic here
                                     console.log('Record Medication');
                                 }}
                             >
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Record OutCome</Text>
+                                <Text style={styles.outComeButtonText}>Record OutCome</Text>
                             </TouchableOpacity>
 
                         </TouchableOpacity>
 
-                        <View
-                            style={{
-                                backgroundColor: '#f5f5f5',
-                                marginTop: 25,
-                                padding: 10,
-                                shadowColor: '#000',
-                                shadowOffset: { width: 0, height: 2 },
-                                shadowOpacity: 0.15,
-                                shadowRadius: 4,
-                                elevation: 4,
-                            }}
-                        >
+                        <View style={styles.card}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10, borderBottomWidth: 2, borderColor: '#eee' }}>
                                 <Ionicons name="file-tray" size={24} color="#1976d2" />
-                                <Text style={[styles.label, { marginBottom: 10, fontSize: 16, marginLeft: 8 }]}>Care Plan:</Text>
+                                <Text style={styles.label}>CARE PLAN AND OTHER DOCUMENTS:</Text>
                             </View>
-                               
+
                             {carePlan ? (
                                 <TouchableOpacity
                                     onPress={() => {
@@ -208,9 +196,13 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                     }}
                                     style={{ flexDirection: 'row', alignItems: 'center' }}
                                 >
-                                    <Text style={[styles.value, { color: '#1976d2', textDecorationLine: 'underline' }]}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                    <Text style={[styles.value, { color: '#1976d2', fontWeight: 'bold', fontSize: 16}]}>
                                         Download Care Plan
                                     </Text>
+                                    <Ionicons name="download" size={30} color="#1976d2" style={{ alignSelf: 'flex-end', marginTop: 5 }} />
+                                    </TouchableOpacity>
+                                    
                                 </TouchableOpacity>
                             ) : (
                                 <Text style={styles.value}>None</Text>
@@ -218,50 +210,40 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             
                         </View>
 
-                        
-                        <Text style={styles.label}>Care List:</Text>
-                        <View style={{ flexWrap: 'wrap', marginBottom: 30 }}>
+                         <View style={styles.card} >
+                            <View style={styles.cardHeader}>
+                                <Ionicons name="medkit" size={24} color="#1976d2" />
+                                <Text style={styles.label}>CARE LIST:</Text>
+                            </View>
+                            <View style={{ flexWrap: 'wrap' }}>
                             {careList.map((item, idx) => (
                                 <Text key={idx} style={[styles.value,]}>• {item}</Text>
                             ))}
+                            </View>
                         </View>
+                        
                     </>
                 )}
             </ScrollView>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 20, backgroundColor: '#fff', borderTopWidth: 1, borderColor: '#eee' }}>
+            <View style={styles.buttonsView}>
                 <TouchableOpacity
-                    style={{
-                        flex: 1,
-                        backgroundColor: '#1976d2',
-                        paddingVertical: 14,
-                        borderRadius: 8,
-                        marginRight: 10,
-                        alignItems: 'center',
-                    }}
+                    style={styles.button1}
                     onPress={() => {
                         // Handle first button press
                         console.log('Start Call Pressed');
                     }}
                 >
-                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Start Call</Text>
+                    <Text style={styles.buttonText}>Start Call</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={{
-                        flex: 1,
-                        backgroundColor: '#fff',
-                        paddingVertical: 14,
-                        borderRadius: 8,
-                        borderWidth: 1,
-                        borderColor: '#1976d2',
-                        alignItems: 'center',
-                    }}
+                    style={styles.button2}
                     onPress={() => {
                         // Handle second button press
                         setModalVisible(true);
                     }}
                 >
-                    <Text style={{ color: '#1976d2', fontWeight: 'bold', fontSize: 16 }}>Add Notes</Text>
+                    <Text style={[styles.buttonText,{color: '#1976d2'}]}>Add Notes</Text>
                     {/* Modal for adding notes */}
                     <Modal
                         visible={modalVisible}
@@ -292,15 +274,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                 </View>
 
                                 <TextInput
-                                    style={{
-                                        borderWidth: 1,
-                                        borderColor: '#ccc',
-                                        borderRadius: 8,
-                                        minHeight: 80,
-                                        padding: 10,
-                                        textAlignVertical: 'top',
-                                        marginBottom: 20,
-                                    }}
+                                    style={styles.textInput}
                                     multiline
                                     numberOfLines={4}
                                     placeholder="Enter your notes here..."
@@ -366,6 +340,9 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginTop: 12,
         color: '#1976d2',
+        marginBottom: 10, 
+        fontSize: 16, 
+        marginLeft: 8 
     },
     value: {
         fontSize: 16,
@@ -377,4 +354,126 @@ const styles = StyleSheet.create({
         color: '#333',
         marginTop: 2,
     },
+    card: {
+        backgroundColor: '#f5f5f5',
+        padding: 10,
+        marginVertical: 15,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        elevation: 4,
+    },
+    cardTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1976d2',
+    },
+    outComeButton: {
+        backgroundColor: '#1976d2',
+        paddingVertical: 10,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    outComeButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    medicationText: {
+        fontSize: 16,
+        color: '#333',
+        marginTop: 2,
+    },
+    medicationList: {
+        marginTop: 10,
+        paddingLeft: 20,
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 10,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        borderBottomWidth: 2,
+        borderColor: '#eee',
+    },
+   buttonsView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 20,
+        backgroundColor: '#fff',
+        borderTopWidth: 1,
+        borderColor: '#eee',
+    },
+    button1: {
+        flex: 1,
+        backgroundColor: '#1976d2',
+        paddingVertical: 14,
+        borderRadius: 8,
+        marginHorizontal: 5,
+        alignItems: 'center',
+    },
+    button2:{
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingVertical: 14,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#1976d2',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f5f5f5',
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        elevation: 4,
+    },
+    checkboxLabel: {
+        marginLeft: 8,
+        fontSize: 16,
+        color: '#333',
+        fontWeight: '500',
+    },
+    checkbox: {
+        marginRight: 10,
+        borderColor: '#1976d2',
+        borderWidth: 1,
+        backgroundColor: '#fff',
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    checkboxChecked: {
+        backgroundColor: '#1976d2',
+        borderColor: '#1976d2',
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textInput:{
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        minHeight: 80,
+        padding: 10,
+        textAlignVertical: 'top',
+        marginBottom: 20,
+    }
 });

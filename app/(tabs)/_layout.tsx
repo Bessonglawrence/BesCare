@@ -17,8 +17,8 @@ function RootLayout() {
   // and the bottom tab navigator.
      return (
     <Stack.Navigator>
-    <Stack.Screen name="Onboarding" options={{ headerShown: false }} component={OnboardingScreen} />
     <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Onboarding" options={{ headerShown: false }} component={OnboardingScreen} />
     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen
         name="Home"
