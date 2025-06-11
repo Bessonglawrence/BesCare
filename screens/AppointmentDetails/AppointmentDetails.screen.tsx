@@ -7,6 +7,7 @@ import Checkbox from 'expo-checkbox';
 import * as Linking from 'expo-linking';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './AppointmentDetails.styles';
+import { AddNoteModal } from '@/components/AddNoteModal/AddNoteModal.component';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -55,21 +56,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
     const [activeTab, setActiveTab] = useState(0);
 
-    // Move these declarations to the component scope
-    const TAB_COUNT = 2;
-    const SCREEN_WIDTH = Dimensions.get('window').width;
-    const translateX = useRef(new Animated.Value(0)).current;
-
-    useEffect(() => {
-        Animated.spring(translateX, {
-            toValue: activeTab * SCREEN_WIDTH,
-            useNativeDriver: true,
-        }).start();
-    }, [activeTab, SCREEN_WIDTH, translateX]);
-
     const [modalVisible, setModalVisible] = useState(false);
-    const [notesInput, setNotesInput] = useState('');
-    const [alertSupervisor, setAlertSupervisor] = useState(false);
     
     const iconSize = 26;
     return (
@@ -276,61 +263,8 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             >
                                 <Text style={[styles.buttonText, { color: '#1976d2' }]}>Add Notes</Text>
                                 {/* Modal for adding notes */}
-                                <Modal
-                                    visible={modalVisible}
-                                    animationType="slide"
-                                    transparent={true}
-                                    onRequestClose={() => setModalVisible(false)}
-                                >
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)' }}>
-                                        <TouchableOpacity
-                                            style={{ position: 'absolute', top: 60, alignSelf: 'center', zIndex: 1, padding: 10, backgroundColor: 'brown', borderRadius: 50, paddingHorizontal: 15, paddingVertical: 5 }}
-                                            activeOpacity={0.7}
-                                            onPress={() => setModalVisible(false)}
-                                        >
-                                            <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>X</Text>
-                                        </TouchableOpacity>
+                                <AddNoteModal visible={modalVisible} onClose={() => setModalVisible(false)} />
                             
-                                        {/* Modal content */}
-                                        <View style={{ width: '90%', backgroundColor: '#fff', borderRadius: 10, padding: 20 }}>
-                                            <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 10, alignSelf: 'center' }}>Add Notes</Text>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 15 }}>
-                                                <Checkbox
-                                                    value={alertSupervisor}
-                                                    onValueChange={setAlertSupervisor}
-                                                    color={alertSupervisor ? '#1976d2' : undefined}
-                                                    disabled={false}
-                                                />
-                                                <Text style={{ marginLeft: 8, fontSize: 16 }}>Alert Supervisor</Text>
-                                            </View>
-
-                                            <TextInput
-                                                style={styles.textInput}
-                                                multiline
-                                                numberOfLines={4}
-                                                placeholder="Enter your notes here..."
-                                                value={notesInput}
-                                                onChangeText={setNotesInput}
-                                            />
-                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                                <TouchableOpacity
-                                                    style={{ marginRight: 15 }}
-                                                    onPress={() => setModalVisible(false)}
-                                                >
-                                                    <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Cancel</Text>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity
-                                                    onPress={() => {
-                                                        // Handle save notes logic here
-                                                        setModalVisible(false);
-                                                    }}
-                                                >
-                                                    <Text style={{ color: '#1976d2', fontWeight: 'bold' }}>Save</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </Modal>
                             </TouchableOpacity>
                         </>
                     );
