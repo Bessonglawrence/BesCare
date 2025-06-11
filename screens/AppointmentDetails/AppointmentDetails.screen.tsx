@@ -8,6 +8,7 @@ import * as Linking from 'expo-linking';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './AppointmentDetails.styles';
 import { AddNoteModal } from '@/components/AddNoteModal/AddNoteModal.component';
+import StartCallModal from '@/components/StartCallModal/StartCallModal.component';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -56,7 +57,8 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
     const [activeTab, setActiveTab] = useState(0);
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const [notesModal, setNotesModal] = useState(false);
+    const [callModal, setCallModal] = useState(false)
     
     const iconSize = 26;
     return (
@@ -240,13 +242,13 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                 ]}
                                 onPress={() => {
                                     if (isToday) {
-                                        // Handle first button press
-                                        console.log('Start Call Pressed');
+                                        setCallModal(true)
                                     }
                                 }}
                                 disabled={!isToday}
                             >
                                 <Text style={styles.buttonText}>Start Call</Text>
+                                <StartCallModal visible={callModal} onClose={() => setCallModal(false)}/>
                             </TouchableOpacity>
 
                             <TouchableOpacity
@@ -256,14 +258,14 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                 ]}
                                 onPress={() => {
                                     if (isToday) {
-                                        setModalVisible(true);
+                                        setNotesModal(true);
                                     }
                                 }}
                                 disabled={!isToday}
                             >
                                 <Text style={[styles.buttonText, { color: '#1976d2' }]}>Add Notes</Text>
                                 {/* Modal for adding notes */}
-                                <AddNoteModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+                                <AddNoteModal visible={notesModal} onClose={() => setNotesModal(false)} />
                             
                             </TouchableOpacity>
                         </>

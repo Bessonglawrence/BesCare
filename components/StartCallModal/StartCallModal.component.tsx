@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CheckBox from 'expo-checkbox';
+import styles from './StartCallModal.style';
 
 interface StartCallModalProps {
     visible: boolean;
@@ -15,9 +16,16 @@ const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose }) => 
         <Modal
             visible={visible}
             transparent
-            animationType="slide"
-            onRequestClose={onClose}
+            animationType="fade"
+            onRequestClose={onClose}  
         >
+                <TouchableOpacity
+                    style={{ position: 'absolute', top: 60, alignSelf: 'center', zIndex: 1, padding: 10, backgroundColor: 'brown', borderRadius: 50, paddingHorizontal: 15, paddingVertical: 5 }}
+                    activeOpacity={1}
+                    onPress={onClose}
+                >
+                    <Text style={{ color: '#fff', fontSize: 30, fontWeight: 'bold' }}>X</Text>
+                </TouchableOpacity>
             <View style={styles.overlay}>
                 <View style={styles.container}>
                     <Text style={styles.title}>Before Starting the Call</Text>
@@ -35,57 +43,20 @@ const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose }) => 
                         />
                         <Text style={styles.label}>Have you read care plan?</Text>
                     </View>
-                    <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                        <Text style={styles.closeButtonText}>Close</Text>
+                    <TouchableOpacity
+                        style={[
+                            styles.closeButton,
+                            !(readCareNotes && readCarePlan) && { backgroundColor: '#b0b0b0' }
+                        ]}
+                        onPress={onClose}
+                        disabled={!(readCareNotes && readCarePlan)}
+                    >
+                        <Text style={styles.closeButtonText}>Start</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </Modal>
     );
 };
-
-const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        width: '85%',
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 24,
-        alignItems: 'stretch',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    checkboxRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    label: {
-        marginLeft: 8,
-        fontSize: 16,
-        flexShrink: 1,
-    },
-    closeButton: {
-        marginTop: 24,
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingVertical: 12,
-        alignItems: 'center',
-    },
-    closeButtonText: {
-        color: '#fff',
-        fontWeight: '600',
-        fontSize: 16,
-    },
-});
 
 export default StartCallModal;
