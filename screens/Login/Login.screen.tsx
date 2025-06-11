@@ -35,7 +35,7 @@ const LoginScreen = ({ navigation }: { navigation: NativeStackNavigationProp<Roo
                     source={require('../../assets/images/BesCare.png')} // Replace with your logo path
                     style={{ width: 200, height: 200, borderRadius: 100, marginBottom: 24 }}
                 />                  
-                <Text style={styles.title}>Login To View Your Care Calls</Text>
+                <Text style={styles.title}>Login To View And Manage Your Care Calls</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -65,14 +65,18 @@ const LoginScreen = ({ navigation }: { navigation: NativeStackNavigationProp<Roo
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => Alert.alert('Forgot Password', 'Password reset instructions will be sent to your email.')}>
-                    <Text style={{ color: '#007BFF', marginBottom: 16, alignSelf: 'flex-end' }}>
-                        Forgot Password?
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
+
+                <View style={{width:"100%", alignItems:'center', top: 100}}>
+                    <TouchableOpacity onPress={() => Alert.alert('Forgot Password', 'Password reset instructions will be sent to your email.')}>
+                        <Text style={{ color: '#007BFF', marginBottom: 16, alignSelf: 'flex-end' }}>
+                            Forgot Password?
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                        <Text style={styles.buttonText}>Login</Text>
+                    </TouchableOpacity>
+                </View>
+
         </View>
     );
 };
@@ -80,10 +84,10 @@ const LoginScreen = ({ navigation }: { navigation: NativeStackNavigationProp<Roo
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
         backgroundColor: '#fcf8f3',
+        paddingTop: 70
     },
     title: {
         fontSize: 16,
@@ -139,7 +143,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-function useEffect(arg0: () => () => any, arg1: never[]) {
-    throw new Error('Function not implemented.');
-}

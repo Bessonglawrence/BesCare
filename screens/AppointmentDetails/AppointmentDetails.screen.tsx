@@ -71,7 +71,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [notesInput, setNotesInput] = useState('');
     const [alertSupervisor, setAlertSupervisor] = useState(false);
     
-
+    const iconSize = 26;
     return (
         <View style={{ flex: 1 }}>
             <NavBar 
@@ -142,15 +142,16 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                     <>
                         <View style={[styles.card]} >
                             <View style={styles.cardHeader}>
-                                <Ionicons name="time" size={24} color="#1976d2" />
-                                <Text style={styles.label}>CALL TIME AND DATE:</Text>
+                                <Ionicons name="time" size={iconSize} color="#1976d2" />
+                                <Text style={styles.label}>CALL DATE AND TIME:</Text>
                             </View>
-                            <Text style={styles.value}>{startTime} - {endTime}</Text>
+                            <Text style={[styles.value,{paddingVertical: 2}]}>{date}</Text>
+                            <Text style={[styles.value,{paddingVertical: 2}]}>{startTime} - {endTime}</Text>
                         </View>
 
                          <View style={[styles.card]} >
                             <View style={styles.cardHeader}>
-                                <Ionicons name="book" size={24} color="#1976d2" />
+                                <Ionicons name="book" size={iconSize} color="#1976d2" />
                                 <Text style={styles.label}>PREVIOUS NOTES:</Text>
                             </View>
                             <Text style={[styles.value,{padding: 10, lineHeight: 24}]}>{careNotes}</Text>
@@ -161,7 +162,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             style={styles.card}
                         >
                             <View style={styles.cardHeader}>
-                                <Ionicons name="medkit" size={24} color="#1976d2" />
+                                <Ionicons name="medkit" size={iconSize} color="#1976d2" />
                                 <Text style={styles.label}>MEDICATIONS:</Text>
                             </View>
                             {medications.length > 0 ? (
@@ -185,8 +186,8 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
                         <View style={styles.card}>
                             <View style={styles.cardHeader}>
-                                <Ionicons name="file-tray" size={24} color="#1976d2" />
-                                <Text style={styles.label}>CARE PLAN AND OTHER DOCUMENTS:</Text>
+                                <Ionicons name="file-tray" size={iconSize} color="#1976d2" />
+                                <Text style={styles.label}>CARE PLAN AND DOCUMENTS:</Text>
                             </View>
                             {carePlan ? (
                                 <TouchableOpacity
@@ -218,12 +219,12 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
                          <View style={[styles.card,{marginBottom: 38}]} >
                             <View style={styles.cardHeader}>
-                                <Ionicons name="list" size={24} color="#1976d2" />
+                                <Ionicons name="list" size={iconSize} color="#1976d2" />
                                 <Text style={styles.label}>CARE LIST:</Text>
                             </View>
                             <View style={{ flexWrap: 'wrap' }}>
                             {careList.map((item, idx) => (
-                                <Text key={idx} style={[styles.value,{paddingBottom: 5}]}>• {item}</Text>
+                                <Text key={idx} style={[styles.value,{paddingVertical: 6}]}>• {item}</Text>
                             ))}
                             </View>
                         </View>

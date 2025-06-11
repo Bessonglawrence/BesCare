@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
         marginTop: 12,
         color: '#1976d2',
         fontStyle: 'italic',
-        marginBottom: 5, 
-        fontSize: 18, 
+        marginBottom: 10, 
+        fontSize: 17, 
         marginLeft: 10 
     },
     value: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlignVertical: 'top',
         marginBottom: 20,
-    }
+    },
 });
 
 export default styles;
