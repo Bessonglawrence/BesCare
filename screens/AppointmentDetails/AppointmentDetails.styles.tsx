@@ -34,14 +34,16 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginTop: 12,
         color: '#1976d2',
-        marginBottom: 10, 
-        fontSize: 16, 
-        marginLeft: 8 
+        fontStyle: 'italic',
+        marginBottom: 5, 
+        fontSize: 18, 
+        marginLeft: 10 
     },
     value: {
         fontSize: 16,
         color: '#333',
-        marginTop: 2,
+        marginLeft: 10,
+        fontWeight:"600"
     },
     address: {
         fontSize: 16,
