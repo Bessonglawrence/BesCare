@@ -1,14 +1,13 @@
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput, } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import NavBar from '@/components/NavBar/NavBar.component';
-import { Animated, Dimensions } from 'react-native';
 import React, { useRef, useEffect,useState  } from 'react';
-import Checkbox from 'expo-checkbox';
 import * as Linking from 'expo-linking';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './AppointmentDetails.styles';
 import { AddNoteModal } from '@/components/AddNoteModal/AddNoteModal.component';
 import StartCallModal from '@/components/StartCallModal/StartCallModal.component';
+import MedicationOutcomeModal from '@/components/MedicationOutcomeModal.component/MedicationOutcomeModal';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -34,6 +33,7 @@ type RootStackParamList = {
     AppointmentDetails: AppointmentDetailsProps;
 };
 
+
 export default function AppointmentDetails({navigation}: {navigation: any}) {
     const route = useRoute<RouteProp<RootStackParamList, 'AppointmentDetails'>>();
     const {
@@ -58,9 +58,20 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [activeTab, setActiveTab] = useState(0);
 
     const [notesModal, setNotesModal] = useState(false);
-    const [callModal, setCallModal] = useState(false)
+    const [callModal, setCallModal] = useState(false);
+    const [medModal, setMedModal] = useState(false);
     
     const iconSize = 26;
+
+    // Parse the date string and compare with today
+    const today = new Date();
+    const callDate = new Date(date);
+    // Compare only the date part (ignore time)
+    const isToday =
+        today.getFullYear() === callDate.getFullYear() &&
+        today.getMonth() === callDate.getMonth() &&
+        today.getDate() === callDate.getDate();
+
     return (
         <View style={{ flex: 1 }}>
             <NavBar 
@@ -149,7 +160,8 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                         <TouchableOpacity
                             activeOpacity={0.5}
                             style={styles.card}
-                        >
+                            disabled={!isToday}
+                            >
                             <View style={styles.cardHeader}>
                                 <Ionicons name="medkit" size={iconSize} color="#1976d2" />
                                 <Text style={styles.label}>MEDICATIONS:</Text>
@@ -161,16 +173,36 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                             ) : (
                                 <Text style={styles.value}>None</Text>
                             )}
-                            <TouchableOpacity
-                                style={styles.outComeButton}
-                                activeOpacity={0.7}
-                                onPress={() => {
-                                    // Implement medication recording logic here
-                                    console.log('Record Medication');
-                                }}
-                            >
-                                <Text style={styles.outComeButtonText}>Record OutCome</Text>
-                            </TouchableOpacity>
+                            {(() => {
+                                // Parse the date string and compare with today
+                                const today = new Date();
+                                const callDate = new Date(date);
+                                // Compare only the date part (ignore time)
+                                const isToday =
+                                    today.getFullYear() === callDate.getFullYear() &&
+                                    today.getMonth() === callDate.getMonth() &&
+                                    today.getDate() === callDate.getDate();
+
+                                return (
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.outComeButton,
+                                            !isToday && { opacity: 0.5 }
+
+                                        ]}
+                                        activeOpacity={0.7}
+                                        onPress={() => {
+                                            if (isToday) {
+                                                setMedModal(true)
+                                            }
+                                        }}
+                                        disabled={!isToday}
+                                    >
+                                        <MedicationOutcomeModal medications={medications} onClose={() => setMedModal(false)} visible={medModal} title="Record Mediction Outcome"/>
+                                        <Text style={styles.outComeButtonText}>Record OutCome</Text>
+                                    </TouchableOpacity>
+                                );
+                            })()}
                         </TouchableOpacity>
 
                         <View style={styles.card}>
