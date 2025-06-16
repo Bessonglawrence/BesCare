@@ -80,6 +80,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                             onValueChange={(itemValue: string | number, itemIndex: number) => {
                                                 // handle outcome selection here
                                             }}
+                                            key={idx}
                                         >
                                             <Picker.Item label="Not Required" value="Not Required" />
                                             <Picker.Item label="Administered" value="Administered" />

@@ -6,9 +6,10 @@ import styles from './StartCallModal.style';
 interface StartCallModalProps {
     visible: boolean;
     onClose: () => void;
+    onStartButtonPressed: () => void;
 }
 
-const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose }) => {
+const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose, onStartButtonPressed }) => {
     const [readCareNotes, setReadCareNotes] = useState(false);
     const [readCarePlan, setReadCarePlan] = useState(false);
 
@@ -48,7 +49,7 @@ const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose }) => 
                             styles.closeButton,
                             !(readCareNotes && readCarePlan) && { backgroundColor: '#b0b0b0' }
                         ]}
-                        onPress={onClose}
+                        onPress={onStartButtonPressed}
                         disabled={!(readCareNotes && readCarePlan)}
                     >
                         <Text style={styles.closeButtonText}>Start</Text>

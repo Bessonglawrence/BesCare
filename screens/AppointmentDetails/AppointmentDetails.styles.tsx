@@ -172,6 +172,16 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
         marginBottom: 20,
     },
+    endCallButton:{
+        flex: 1,
+        backgroundColor: 'ghostwhite',
+        paddingVertical: 14,
+        borderRadius: 8,
+        marginHorizontal: 5,
+        alignItems: 'center',
+        borderColor: 'brown',
+        borderWidth: 1,
+    }
 });
 
 export default styles;

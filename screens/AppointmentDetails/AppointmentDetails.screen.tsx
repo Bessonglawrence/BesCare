@@ -60,6 +60,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [notesModal, setNotesModal] = useState(false);
     const [callModal, setCallModal] = useState(false);
     const [medModal, setMedModal] = useState(false);
+    const [callStarted, setCallStarted] = useState(false);
     
     const iconSize = 26;
 
@@ -267,21 +268,42 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
 
                     return (
                         <>
-                            <TouchableOpacity
-                                style={[
-                                    styles.button1,
-                                    !isToday && { opacity: 0.5 }
-                                ]}
-                                onPress={() => {
-                                    if (isToday) {
-                                        setCallModal(true)
-                                    }
-                                }}
-                                disabled={!isToday}
-                            >
-                                <Text style={styles.buttonText}>Start Call</Text>
-                                <StartCallModal visible={callModal} onClose={() => setCallModal(false)}/>
-                            </TouchableOpacity>
+                            {/* Toggle between  Start Call and EndCall buttons */}
+                            <View style={{flex: 1}}>
+                                { !callStarted ?
+                                <TouchableOpacity
+                                    style={[
+                                        styles.button1,
+                                        !isToday && { opacity: 0.5 }
+                                    ]}
+                                    onPress={() => {
+                                        if (isToday && !callStarted) {
+                                            setCallModal(true)                                    
+                                        }
+                                    }}
+                                    disabled={!isToday}
+                                    >
+                                    <Text style={[styles.buttonText]}>Start Call</Text>
+                                    <StartCallModal visible={callModal} onClose={() => setCallModal(false)} onStartButtonPressed={() =>{ setCallStarted(prev => !prev);}}/>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity
+                                    style={[
+                                        styles.endCallButton,
+                                        !isToday && { opacity: 0.5 }
+                                    ]}
+                                    onPress={() => {
+                                        if (isToday) {
+                                            setCallStarted(false)
+                                        }
+                                    }}
+                                    disabled={!isToday}
+                                    >
+                                    <Text style={[styles.buttonText,{color: 'brown'}]}>End Call</Text>
+                                </TouchableOpacity>
+                                }
+                            </View>
+
 
                             <TouchableOpacity
                                 style={[
