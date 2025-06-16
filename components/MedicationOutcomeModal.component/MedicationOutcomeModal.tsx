@@ -1,6 +1,6 @@
 import Checkbox from 'expo-checkbox';
 import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Modal, View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 
@@ -45,7 +45,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                         <Text style={styles.closeText}>X</Text>
                     </TouchableOpacity>
                     {title && <Text style={styles.title}>{title}</Text>}
-                    <View style={styles.content}>
+                    <ScrollView style={styles.content}>
                         {medications && medications.length > 0 ? (
                             medications.map((med, idx) => (
                                 <View>
@@ -55,7 +55,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                         onValueChange={() => handleCheckboxChange(idx)}
                                         style={{width: 30, height: 30}}
                                     />
-                                    <Text style={[styles.value, { marginBottom: 3, marginLeft: 10 }]}>{med}</Text>
+                                    <Text style={[styles.value, { marginBottom: 3, marginLeft: 10, fontWeight: 'bold' }]}>{med}</Text>
                                     <TouchableOpacity
                                         style={[styles.recordButton,{backgroundColor: checkedStates && checkedStates[idx] ? '#1976d2' : '#b0b0b0',}]}
                                         disabled={!checkedStates || !checkedStates[idx]}
@@ -72,7 +72,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                         borderRadius: 6,
                                         overflow: 'hidden',
                                         backgroundColor: '#fafafa',
-                                    }}>
+                                    }} key={idx}>
                                         <Picker
                                             selectedValue={checkedStates[idx] ? undefined : 'Not Required'}
                                             enabled={checkedStates[idx]}
@@ -96,7 +96,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                         ) : (
                             <Text style={styles.value}>None</Text>
                         )}
-                    </View>
+                    </ScrollView>
                 </View>
             </View>
         </Modal>
