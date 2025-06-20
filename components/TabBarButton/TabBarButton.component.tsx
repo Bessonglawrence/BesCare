@@ -3,13 +3,15 @@ import { TouchableOpacity, Text, StyleSheet, View, GestureResponderEvent, Pressa
 import { icon } from '@/constants/icon';
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
+type IconKeys = keyof typeof icon;
+
 type TabBarButtonProps = {
     label: string;
     focused?: boolean;
     onPress?: (event: GestureResponderEvent) => void;
     onLongPress?: (event: GestureResponderEvent) => void;
     disabled?: boolean;
-    routeName: string;
+    routeName: IconKeys;
     colors?:string;
     isFocused?: boolean; // Optional prop to indicate if the button is focused
 };

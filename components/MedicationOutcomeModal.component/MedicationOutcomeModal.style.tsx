@@ -51,6 +51,22 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         borderRadius: 6,
         marginVertical: 6
+    },
+    pickerView:{
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 6,
+        overflow: 'hidden',
+        backgroundColor: '#fafafa',
+    },
+    pickerMain:{ 
+        marginLeft: 40, 
+        marginTop: 6, 
+        marginBottom: 12 
+    },
+    outCome:{ 
+        fontSize: 14, 
+        marginBottom: 4 
     }
 });
 

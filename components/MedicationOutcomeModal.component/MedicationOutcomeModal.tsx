@@ -65,15 +65,9 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                         <Text style={{ color: '#fff', fontWeight: 'bold' }}>Administered</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ marginLeft: 40, marginTop: 6, marginBottom: 12 }}>
-                                    <Text style={{ fontSize: 14, marginBottom: 4 }}>Outcome:</Text>
-                                    <View style={{
-                                        borderWidth: 1,
-                                        borderColor: '#ccc',
-                                        borderRadius: 6,
-                                        overflow: 'hidden',
-                                        backgroundColor: '#fafafa',
-                                    }} key={idx}>
+                                <View style={styles.pickerMain}>
+                                    <Text style={styles.outCome}>Outcome:</Text>
+                                    <View style={styles.pickerView} key={idx} >
                                         <Picker
                                             selectedValue={checkedStates[idx] ? undefined : 'Not Required'}
                                             enabled={checkedStates[idx]}

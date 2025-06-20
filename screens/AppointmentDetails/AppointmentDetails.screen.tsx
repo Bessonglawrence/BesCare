@@ -59,10 +59,20 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [activeTab, setActiveTab] = useState(0);
 
     const [notesModal, setNotesModal] = useState(false);
-    const [callModal, setCallModal] = useState(false);
+    const [startCallModal, setStartCallModal] = useState(false);
     const [medModal, setMedModal] = useState(false);
     const [callStarted, setCallStarted] = useState(false);
     const [endCallModal, setEndCallModal] =useState(false);
+
+    const onEndButtonPress = () =>{
+        setCallStarted(false)
+        setStartCallModal(false)
+    }
+
+    const onStartCallPress = () =>{
+        setStartCallModal(true)
+        setEndCallModal(false)
+    }
     
     const iconSize = 26;
 
@@ -280,13 +290,13 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                     ]}
                                     onPress={() => {
                                         if (isToday && !callStarted) {
-                                            setCallModal(true)                                    
+                                            onStartCallPress()                                  
                                         }
                                     }}
                                     disabled={!isToday}
                                     >
                                     <Text style={[styles.buttonText]}>Start Call</Text>
-                                    <StartCallModal visible={callModal} onClose={() => setCallModal(false)} onStartButtonPressed={() =>{ setCallStarted(prev => !prev);}}/>
+                                    <StartCallModal visible={startCallModal} onClose={() => setStartCallModal(false)} onStartButtonPressed={() =>{ setCallStarted(true);}}/>
                                 </TouchableOpacity>
                                 :
                                 <TouchableOpacity
@@ -302,7 +312,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                     disabled={!isToday}
                                     >
                                     <Text style={[styles.buttonText,{color: 'brown'}]}>End Call</Text>
-                                    <EndCallModal visible={endCallModal} onClose={() => setEndCallModal(false)} onEndButtonPressed={() => setCallStarted(prev => !prev)} careList={careList} />
+                                    <EndCallModal visible={endCallModal} onClose={() => setEndCallModal(false)} onEndButtonPressed={onEndButtonPress} careList={careList} />
                                 </TouchableOpacity>
                                 }
                             </View>

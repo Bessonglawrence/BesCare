@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Ensure you have this package installed
 import { MaterialIcons } from '@expo/vector-icons'; // Ensure you have this package installed
+import styles from './NavBar.style';
+import type { IconProps } from '@expo/vector-icons/build/createIconSet';
 interface NavBarProps {
     title: string;
     leftIcon?: React.ReactNode;
@@ -9,7 +11,7 @@ interface NavBarProps {
     onLeftPress?: () => void;
     onRightPress?: () => void;
     style?: ViewStyle;
-    iconName?: string; // Icon name for the right icon, if using Ionicons
+    iconName?: React.ComponentProps<typeof Ionicons>['name']; // Icon name for the right icon, if using Ionicons
 }
 
 const NavBar: React.FC<NavBarProps> = ({
@@ -49,33 +51,8 @@ const NavBar: React.FC<NavBarProps> = ({
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        height: 65,
-        backgroundColor: 'brown', // Semi-transparent brown
-        flexDirection: 'row',
-        alignItems: 'center',
-        elevation: 10, // Increased elevation for Android
-        shadowColor: '#000',
-        shadowOpacity: 0.25, // More subtle shadow
-        shadowOffset: { width: 0, height: 6 }, // Deeper shadow
-        shadowRadius: 10, // Softer shadow edges
-        paddingHorizontal: 16,
-        justifyContent: 'space-between',
-        zIndex: 10, // Ensure shadow is visible above other elements
-    },
-    iconContainer: {
-        width: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#222',
-    },
-});
+// const styles = StyleSheet.create({
+
+// });
 
 export default NavBar;

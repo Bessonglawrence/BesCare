@@ -61,9 +61,9 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
-          options.tabBarLabel !== undefined
+          typeof options.tabBarLabel === 'string'
             ? options.tabBarLabel
-            : options.title !== undefined
+            : typeof options.title === 'string'
               ? options.title
               : route.name;
 
@@ -95,7 +95,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onPress={onPress}
             onLongPress={onLongPress}
             isFocused={isFocused}
-            routeName={route.name}
+            routeName={route.name as 'search' | 'index' | 'profile' | 'notifications' | 'settings'}
             label={label}
             colors={isFocused ? 'brown' : '#222'}
           />
