@@ -9,7 +9,7 @@ interface StartCallModalProps {
     onStartButtonPressed: () => void;
 }
 
-const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose, onStartButtonPressed }) => {
+const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose,onStartButtonPressed }) => {
     const [readCareNotes, setReadCareNotes] = useState(false);
     const [readCarePlan, setReadCarePlan] = useState(false);
 

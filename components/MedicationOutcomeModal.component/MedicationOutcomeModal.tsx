@@ -1,7 +1,8 @@
 import Checkbox from 'expo-checkbox';
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import styles from './MedicationOutcomeModal.style';
 
 
 interface MedicationOutcomeModalProps {
@@ -18,11 +19,11 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
     title,
     medications,
 }) => {
-    const [checkedStates, setCheckedStates] = React.useState<boolean[]>(
+    const [checkedStates, setCheckedStates] = useState<boolean[]>(
         medications && medications.length > 0 ? new Array(medications.length).fill(false) : []
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setCheckedStates(medications && medications.length > 0 ? new Array(medications.length).fill(false) : []);
     }, [medications]);
 
@@ -45,10 +46,10 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                         <Text style={styles.closeText}>X</Text>
                     </TouchableOpacity>
                     {title && <Text style={styles.title}>{title}</Text>}
-                    <ScrollView style={styles.content}>
+                    <View style={styles.content}>
                         {medications && medications.length > 0 ? (
                             medications.map((med, idx) => (
-                                <View>
+                                <ScrollView key={idx}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}} key={idx}>
                                     <Checkbox
                                         value={checkedStates[idx]}
@@ -78,7 +79,7 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                             enabled={checkedStates[idx]}
                                             style={{ height: 60, width: "auto", paddingBottom: 25 }}
                                             onValueChange={(itemValue: string | number, itemIndex: number) => {
-                                                // handle outcome selection here
+                                                //Todo handle outcome selection here
                                             }}
                                             key={idx}
                                         >
@@ -92,70 +93,17 @@ const MedicationOutcomeModal: React.FC<MedicationOutcomeModalProps> = ({
                                         </Picker>
                                     </View>
                                 </View>
-                                </View>
+                                </ScrollView>
                             ))
                         ) : (
                             <Text style={styles.value}>None</Text>
                         )}
-                    </ScrollView>
+                    </View>
                 </View>
             </View>
         </Modal>
     );
 };
 
-const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalContainer: {
-        width: '95%',
-        backgroundColor: '#fff',
-        borderRadius: 12,
-        padding: 20,
-        elevation: 5,
-        position: 'relative',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginBottom: 12,
-        textAlign: 'center',
-    },
-    closeButton: {
-        width: 60,
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 30,
-        backgroundColor: 'ghostwhite',
-        borderColor: 'brown',
-        borderWidth: 1,
-        alignSelf: 'center',
-        marginBottom: 40
-    },
-    closeText: {
-        fontSize: 35,
-        color: 'brown',
-        fontWeight: 'bold'
-    },
-    value: {
-        fontSize: 16,
-        color: '#333',
-    },
-    content: {
-        marginTop: 24,
-    },
-    recordButton:{
-        marginLeft: 'auto',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 6,
-        marginVertical: 6
-    }
-});
 
 export default MedicationOutcomeModal;

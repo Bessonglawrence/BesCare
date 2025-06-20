@@ -8,6 +8,7 @@ import styles from './AppointmentDetails.styles';
 import { AddNoteModal } from '@/components/AddNoteModal/AddNoteModal.component';
 import StartCallModal from '@/components/StartCallModal/StartCallModal.component';
 import MedicationOutcomeModal from '@/components/MedicationOutcomeModal.component/MedicationOutcomeModal';
+import EndCallModal from '@/components/EndCallModal/EndCallModal.component';
 
 type AppointmentDetailsProps = {
     date: string;
@@ -61,6 +62,7 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
     const [callModal, setCallModal] = useState(false);
     const [medModal, setMedModal] = useState(false);
     const [callStarted, setCallStarted] = useState(false);
+    const [endCallModal, setEndCallModal] =useState(false);
     
     const iconSize = 26;
 
@@ -294,12 +296,13 @@ export default function AppointmentDetails({navigation}: {navigation: any}) {
                                     ]}
                                     onPress={() => {
                                         if (isToday) {
-                                            setCallStarted(false)
+                                            setEndCallModal(true)
                                         }
                                     }}
                                     disabled={!isToday}
                                     >
                                     <Text style={[styles.buttonText,{color: 'brown'}]}>End Call</Text>
+                                    <EndCallModal visible={endCallModal} onClose={() => setEndCallModal(false)} onEndButtonPressed={() => setCallStarted(prev => !prev)} careList={careList} />
                                 </TouchableOpacity>
                                 }
                             </View>
