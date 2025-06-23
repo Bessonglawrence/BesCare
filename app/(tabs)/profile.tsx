@@ -16,8 +16,8 @@ const ProfileScreen = () => {
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
             <Image source={{ uri: user.avatar }} style={styles.avatar} />
-            <View style={{ alignItems: 'center', marginVertical: 10 }}>
-                <Text style={{fontSize: 24, fontWeight: 'bold', fontStyle: 'italic', fontFamily: 'RockSalt'}}>{user.name}</Text>
+            <View style={{ alignItems: 'center' }}>
+                <Text style={{fontSize: 24, fontWeight: 'bold', fontStyle: 'italic', fontFamily: 'RockSalt', color: 'lightblue'}}>{user.name}</Text>
             </View>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.section}>
@@ -96,17 +96,16 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
-        width: '60%',
+        width: '50%',
         alignSelf: 'center',
-        marginBottom: 10,
     },
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '600',
     },
     sectionLabel: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 4,
