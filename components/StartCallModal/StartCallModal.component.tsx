@@ -34,6 +34,7 @@ const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose,onStar
                         <CheckBox
                             value={readCareNotes}
                             onValueChange={setReadCareNotes}
+                            style={styles.checkbox}
                         />
                         <Text style={styles.label}>Have you read previous care notes?</Text>
                     </View>
@@ -41,6 +42,7 @@ const StartCallModal: React.FC<StartCallModalProps> = ({ visible, onClose,onStar
                         <CheckBox
                             value={readCarePlan}
                             onValueChange={setReadCarePlan}
+                            style={styles.checkbox}
                         />
                         <Text style={styles.label}>Have you read care plan?</Text>
                     </View>

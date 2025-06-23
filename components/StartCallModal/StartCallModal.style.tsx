@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     label: {
         marginLeft: 8,
-        fontSize: 16,
+        fontSize: 17,
         flexShrink: 1,
     },
     closeButton: {
@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
+    checkbox:{
+        height: 30,
+        width: 30,
+    }
 })
 
 export default styles;
